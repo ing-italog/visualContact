@@ -60,13 +60,12 @@ GROUP BY Co.DNI
  ,Pr.Name
  ,Pr.Price
  ,Ds.TotalItems
-ORDER BY Co.DNI DESC
+ORDER BY Co.DNI DESC, Unidades_Vendidas ASC
 
 
 -----------------------------------------------------------------------------------------
 --1.2.4 Listado de clientes que han comprado un producto especifico.
 CREATE PROCEDURE [dbo].[ListProductsByCliente] 
-@DNI VARCHAR(150),
 @CodeProduct VARCHAR(150)
 AS 
 
@@ -80,6 +79,6 @@ FROM VisualContact.dbo.Costumer Co WITH(NOLOCK)
 INNER JOIN VisualContact.dbo.Sell Se WITH(NOLOCK) ON Se.DNICostumer = Co.DNI
 INNER JOIN  VisualContact.dbo.DetailSell Ds WITH(NOLOCK) ON Ds.IdSell = Se.Id
 INNER JOIN VisualContact.dbo.Products Pr WITH(NOLOCK) ON Pr.Code = Ds.CodeProduct
-WHERE Co.DNI = @DNI AND Pr.Code = @CodeProduct
+WHERE Pr.Code = @CodeProduct
 GROUP BY  Co.DNI ,Co.FirstName ,Co.LastName ,Co.Address ,Co.BirthDay 
--- EXEC [dbo].[ListProductsByCliente] '43651394', 'zxy321'
+-- EXEC [dbo].[ListProductsByCliente] 'zxy321'
